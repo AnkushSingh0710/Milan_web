@@ -39,11 +39,7 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  const name = req.body.name;
-  const number = req.body.number;
-  const hostel = req.body.hostel;
+  const { email, password, name, number, hostel } = req.body;
 
   try {
     const checkResult = await db.query("SELECT * FROM milan WHERE email = $1", [
@@ -51,14 +47,15 @@ app.post("/register", async (req, res) => {
     ]);
 
     if (checkResult.rows.length > 0) {
-      res.send("Email already exists. Try logging in.");
+      res.redirect("/login");
     } else {
       const result = await db.query(
         "INSERT INTO milan (name, email, password, number, hostel) VALUES ($1, $2, $3, $4, $5)",
         [name, email, password, number, hostel]
       );
       console.log(result);
-      res.sendFile(__dirname + "/views/home.html");
+      // res.sendFile(__dirname + "/views/home.html");
+      res.redirect("/");
     }
   } catch (err) {
     console.log(err);
@@ -66,8 +63,7 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  const { email, password } = req.body;
 
   try {
     const result = await db.query("SELECT * FROM milan WHERE email = $1", [
@@ -83,12 +79,13 @@ app.post("/login", async (req, res) => {
         res.send("Incorrect Password");
       }
     } else {
-      res.send("User not found");
+      res.redirect("/register");
     }
   } catch (err) {
     console.log(err);
   }
 });
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
