@@ -8,11 +8,11 @@ const app = express();
 const port = 5000;
 
 const db = new pg.Client({
-  user: "postgres",
-  host: "localhost", 
-  database: "Milan",
-  password: "root",
-  port: 5432,
+  user: "sql12711219",
+  host: "sql12.freemysqlhosting.net", 
+  database: "sql12711219",
+  password: "Q8n9uwVSIs",
+  port: 3306,
 });
 
 db.connect();
