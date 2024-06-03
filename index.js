@@ -5,14 +5,15 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 
 const app = express();
-const port = 5000;
+const port = 5001;
 
 const db = new pg.Client({
-  user: "sql12711219",
-  host: "sql12.freemysqlhosting.net", 
-  database: "sql12711219",
-  password: "Q8n9uwVSIs",
-  port: 3306,
+  user: "Milan_owner",
+  host: "ep-polished-smoke-a12sfj0v.ap-southeast-1.aws.neon.tech", 
+  database: "Milan",
+  password: "yXv7R6fGMABz",
+  port: 5432,
+  ssl: "true",
 });
 
 db.connect();
@@ -54,7 +55,6 @@ app.post("/register", async (req, res) => {
         [name, email, password, number, hostel]
       );
       console.log(result);
-      // res.sendFile(__dirname + "/views/home.html");
       res.redirect("/");
     }
   } catch (err) {
